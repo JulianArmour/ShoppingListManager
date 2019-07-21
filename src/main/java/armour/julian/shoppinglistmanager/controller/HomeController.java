@@ -15,7 +15,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String listManager(Model model) {
-        User currentlyLoggedInUser = userService.getLoggedInUser();
+        User currentlyLoggedInUser = userService.getLoggedInUser(true, false);
         model.addAttribute("user", currentlyLoggedInUser);
         return "user-created-lists";
     }

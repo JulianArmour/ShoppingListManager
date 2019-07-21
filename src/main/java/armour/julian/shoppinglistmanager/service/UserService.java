@@ -4,5 +4,5 @@ import armour.julian.shoppinglistmanager.model.User;
 
 public interface UserService {
     User registerNewUser(String username, String password);
-    User getLoggedInUser();
+    User getLoggedInUser(boolean loadCreatedLists, boolean loadSharedLists);
 }
