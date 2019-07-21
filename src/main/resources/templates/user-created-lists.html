@@ -8,7 +8,7 @@
   <title>Shopping Lists</title>
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
     <button class="btn btn-success">New List</button>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#shoppingListContent"
             aria-controls="shoppingListContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,8 +26,20 @@
     </div>
   </nav>
 
-  <div class="container">
-
+  <div class="container mt-5">
+    <div class="row">
+      <div th:each="list : ${user.createdShoppingLists}" class="col-sm-6 col-lg-4">
+        <div class="row justify-content-center">
+          <div class="card bg-light my-3" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">List name</h5>
+              <p class="card-text">A list description.</p>
+              <a href="@{/list/${list.id}" class="btn btn-info">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

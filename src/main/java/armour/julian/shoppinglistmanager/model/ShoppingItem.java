@@ -9,6 +9,11 @@ import javax.persistence.*;
 @Data
 public class ShoppingItem {
 
+    public ShoppingItem(String name, int quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -18,5 +23,5 @@ public class ShoppingItem {
     private String name;
 
     @Column(name = "quantity")
-    private Long quantity;
+    private int quantity;
 }
