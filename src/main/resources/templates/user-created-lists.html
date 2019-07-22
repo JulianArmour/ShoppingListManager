@@ -34,7 +34,7 @@
             <div class="card-body">
               <h5 class="card-title" th:text="${list.name}">List name</h5>
               <p class="card-text" th:text="${list.description}">A list description.</p>
-              <a th:href="@{/list/${list.id}}" class="btn btn-info">View</a>
+              <a th:href="@{/list/{listId}(listId=${list.id})}" class="btn btn-info">View</a>
             </div>
           </div>
         </div>

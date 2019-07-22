@@ -18,7 +18,7 @@ public class ShoppingList {
         this.permittedEditors = new HashSet<>();
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
 
