@@ -14,7 +14,7 @@ public class MyListsController {
 
     @GetMapping("/")
     public String indexRedirect() {
-        return "redirect:/my-lists";
+        return "redirect:/mylists";
     }
 
     @GetMapping("/mylists")
