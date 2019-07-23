@@ -9,7 +9,7 @@
 </head>
 <body>
   <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
-    <button class="btn btn-success">New List</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newListForm">New list</button>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#shoppingListContent"
             aria-controls="shoppingListContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,6 +25,25 @@
       </ul>
     </div>
   </nav>
+
+<!--New list modal-->
+<div class="modal fade" id="newListForm" tabindex="-1" role="dialog" aria-labelledby="newListTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newListTitle">Enter a name and description</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Main content-->
 
   <div class="container mt-5">
     <div class="row">
