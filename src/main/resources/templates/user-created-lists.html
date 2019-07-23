@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib prefix="form"
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -31,13 +32,23 @@
   <div class="modal-dialog modal-dialog-centered" role="form">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newListTitle">Enter a name and description</h5>
+        <h5 class="modal-title" id="newListTitle">Create a new list</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-
+        <form th:action="@{/mylists/create}" method="post">
+          <div class="form-group">
+            <label for="newListName">List name</label>
+            <input type="text" class="form-control" id="newListName" placeholder="E.g Groceries">
+          </div>
+          <div class="form-group">
+            <label for="listDescription">Description</label>
+            <input type="text" class="form-control" id="listDescription" placeholder="E.g The grocery list for this week">
+          </div>
+          <button type="submit" class="btn btn-success">Create</button>
+        </form>
       </div>
     </div>
   </div>
