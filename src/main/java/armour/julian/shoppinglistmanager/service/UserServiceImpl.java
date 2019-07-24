@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User getLoggedInUser(boolean loadCreatedLists, boolean loadSharedLists) {
         val userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         val user = userPrincipal.getUser();
@@ -38,5 +37,10 @@ public class UserServiceImpl implements UserService {
             Hibernate.initialize(user.getSharedLists());
         }
         return user;
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
     }
 }
