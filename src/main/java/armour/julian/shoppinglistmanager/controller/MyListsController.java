@@ -6,10 +6,7 @@ import armour.julian.shoppinglistmanager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/mylists")
@@ -32,5 +29,11 @@ public class MyListsController {
         currentlyLoggedInUser.addCreatedList(newList);
         userService.save(currentlyLoggedInUser);
         return "redirect:/mylists";
+    }
+
+    @GetMapping("/mylists/{id}")
+    public String viewList(@PathVariable("id") Long id, Model model) {
+
+        return "list-view";
     }
 }

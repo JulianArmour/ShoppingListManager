@@ -1,23 +1,20 @@
 package armour.julian.shoppinglistmanager.service;
 
 import armour.julian.shoppinglistmanager.model.User;
-import armour.julian.shoppinglistmanager.repository.ShoppingListRepository;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import armour.julian.shoppinglistmanager.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final ShoppingListRepository shoppingListRepository;
+    private final ShoppingListService shoppingListService;
 
     public User registerNewUser(String username, String password) {
         val user = new User();
@@ -31,10 +28,10 @@ public class UserServiceImpl implements UserService {
         val userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         val user = userPrincipal.getUser();
         if (loadCreatedLists) {
-            user.setCreatedShoppingLists(shoppingListRepository.findShoppingListsByListCreator(user));
+            user.setCreatedShoppingLists(shoppingListService.getCreatedShoppingListsForCreator(user));
         }
         if (loadSharedLists) {
-            Hibernate.initialize(user.getSharedLists());
+            user.setSharedLists(shoppingListService.getSharedShoppingListsForUser(user));
         }
         return user;
     }
