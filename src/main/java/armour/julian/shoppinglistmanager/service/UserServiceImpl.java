@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -28,10 +30,10 @@ public class UserServiceImpl implements UserService {
         val userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         val user = userPrincipal.getUser();
         if (loadCreatedLists) {
-            user.setCreatedShoppingLists(shoppingListService.getCreatedShoppingListsForCreator(user));
+            user.setCreatedShoppingLists(shoppingListService.getShoppingListsByCreator(user));
         }
         if (loadSharedLists) {
-            user.setSharedLists(shoppingListService.getSharedShoppingListsForUser(user));
+            user.setListsSharedWithThisUser(new HashSet<>(shoppingListService.getShoppingListsSharedWithUser(user)));
         }
         return user;
     }

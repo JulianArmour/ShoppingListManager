@@ -6,7 +6,6 @@ import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface ShoppingListService {
 
@@ -19,7 +18,7 @@ public interface ShoppingListService {
      */
     Optional<ShoppingList> getShoppingListById(@NonNull Long id);
 
-    List<ShoppingList> getCreatedShoppingListsForCreator(@NonNull User user);
+    List<ShoppingList> getShoppingListsByCreator(@NonNull User user);
 
-    Set<ShoppingList> getSharedShoppingListsForUser(User user);
+    List<ShoppingList> getShoppingListsSharedWithUser(User user);
 }

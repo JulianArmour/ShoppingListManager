@@ -36,9 +36,31 @@ public class ShoppingListManagerApplication {
             list2.addItem(new ShoppingItem("Blue Polo", 1));
 
             user.addCreatedList(list);
+            list.setListCreator(user);
             user.addCreatedList(list2);
+            list2.setListCreator(user);
 
             userRepository.save(user);
+
+            // User #2
+
+            val user2 = new User();
+            user2.setUsername("user2");
+            user2.setPassword(passwordEncoder.encode("user2"));
+            userRepository.save(user2);
+
+            val list3 = new ShoppingList();
+            list3.setName("Shared list");
+            list3.setDescription("testing shared lists");
+            list3.addItem(new ShoppingItem("good stuff", 4));
+
+            user2.addCreatedList(list3);
+            list3.setListCreator(user2);
+            // share the list
+            list3.addPermittedEditor(user);
+            user.addListSharedWithThisUser(list3);
+            userRepository.save(user);
+            userRepository.save(user2);
         };
     }
 }

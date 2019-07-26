@@ -18,9 +18,10 @@ public class MyListsController {
     public String listManager(Model model) {
         User currentlyLoggedInUser = userService.getLoggedInUser(true, false);
         model.addAttribute("user", currentlyLoggedInUser);
+        model.addAttribute("lists", currentlyLoggedInUser.getCreatedShoppingLists());
         // add a ShoppingList object for the "New List" form
         model.addAttribute("newList", new ShoppingList());
-        return "user-created-lists";
+        return "user-lists";
     }
 
     @PostMapping("/create")
@@ -33,7 +34,7 @@ public class MyListsController {
 
     @GetMapping("/mylists/{id}")
     public String viewList(@PathVariable("id") Long id, Model model) {
-
+        //TODO
         return "list-view";
     }
 }

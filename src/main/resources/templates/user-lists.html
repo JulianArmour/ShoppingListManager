@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@ taglib prefix="form"
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -18,7 +17,7 @@
     <div class="collapse navbar-collapse ml-3" id="shoppingListContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active"><a href="#" class="nav-link">My lists</a></li>
-        <li class="nav-item"><a th:href="@{/shared-with-me}" class="nav-link">Shared with me</a></li>
+        <li class="nav-item"><a th:href="@{/sharedwithme}" class="nav-link">Shared with me</a></li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item"><span class="navbar-text mr-sm-4" th:text="${user.username}">Username</span></li>
@@ -59,7 +58,7 @@
 
   <div class="container mt-5">
     <div class="row">
-      <div th:each="list : ${user.createdShoppingLists}" class="col-sm-6 col-lg-4">
+      <div th:each="list : ${lists}" class="col-sm-6 col-lg-4">
         <div class="row justify-content-center">
           <div class="card bg-light my-3 mx-sm-2" style="width: 18rem;">
             <div class="card-body">

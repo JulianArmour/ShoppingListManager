@@ -1,6 +1,8 @@
 package armour.julian.shoppinglistmanager.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,39 +12,45 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-@Data
 public class User {
-
-    public User() {
-        this.createdShoppingLists = new ArrayList<>();
-        this.sharedLists = new HashSet<>();
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
+    @Getter @Setter
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
+    @Getter @Setter
     private String username;
 
     @Column(name = "password", nullable = false)
+    @Getter @Setter
     private String password;
 
     /**
      * The shopping lists this user has created.
      */
+    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "listCreator", orphanRemoval = true)
+    @Getter @Setter
     private List<ShoppingList> createdShoppingLists;
 
     /**
      * The lists created by other users which this user has access to edit.
      */
-    @ManyToMany
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_shopping_list",
-        joinColumns = @JoinColumn(name = "post_id"),
+        joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "shopping_list_id"))
-    private Set<ShoppingList> sharedLists;
+    @Getter @Setter
+    private Set<ShoppingList> listsSharedWithThisUser;
+
+    public User() {
+        this.createdShoppingLists = new ArrayList<>();
+        this.listsSharedWithThisUser = new HashSet<>();
+    }
 
     /**
      * Adds a shopping list created by this user to their created shopping lists.
@@ -51,6 +59,9 @@ public class User {
      */
     public void addCreatedList(ShoppingList createdShoppingList) {
         this.createdShoppingLists.add(createdShoppingList);
-        createdShoppingList.setListCreator(this);
+    }
+
+    public void addListSharedWithThisUser(ShoppingList shoppingList) {
+        this.listsSharedWithThisUser.add(shoppingList);
     }
 }

@@ -9,11 +9,6 @@ import javax.persistence.*;
 @Data
 public class ShoppingItem {
 
-    public ShoppingItem(String name, int quantity) {
-        this.name = name;
-        this.quantity = quantity;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -24,4 +19,12 @@ public class ShoppingItem {
 
     @Column(name = "quantity")
     private int quantity;
+
+    public ShoppingItem() {
+    }
+
+    public ShoppingItem(String name, int quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
 }

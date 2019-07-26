@@ -29,10 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").authenticated()
                 .and()
             .formLogin();
-//        http
-//            .csrf().disable();
-//        http
-//            .headers().frameOptions().disable();
+        http
+            .csrf().disable();
+        http
+            .headers().frameOptions().disable();
 
     }
 

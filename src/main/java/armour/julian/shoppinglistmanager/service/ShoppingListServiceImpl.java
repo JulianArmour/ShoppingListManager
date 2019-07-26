@@ -5,12 +5,11 @@ import armour.julian.shoppinglistmanager.model.User;
 import armour.julian.shoppinglistmanager.repository.ShoppingListRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
+@Service
 @RequiredArgsConstructor
 public class ShoppingListServiceImpl implements ShoppingListService {
     private final ShoppingListRepository shoppingListRepo;
@@ -21,12 +20,12 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
-    public Set<ShoppingList> getSharedShoppingListsForUser(User user) {
-        return shoppingListRepo.findShoppingListsByPermittedEditorsContaining(user);
+    public List<ShoppingList> getShoppingListsSharedWithUser(User user) {
+        return shoppingListRepo.findShoppingListsByPermittedEditors(user);
     }
 
     @Override
-    public List<ShoppingList> getCreatedShoppingListsForCreator(@NonNull User user) {
+    public List<ShoppingList> getShoppingListsByCreator(@NonNull User user) {
         return shoppingListRepo.findShoppingListsByListCreator(user);
     }
 }
