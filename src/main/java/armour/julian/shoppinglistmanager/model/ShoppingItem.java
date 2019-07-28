@@ -20,6 +20,9 @@ public class ShoppingItem {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Column(name = "complete")
+    private Boolean complete;
+
     public ShoppingItem() {
     }
 
