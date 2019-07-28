@@ -52,4 +52,10 @@ public class MyListsController {
 
         return "redirect:/mylists";
     }
+
+    @PostMapping("/{id}/complete")
+    public String completeShoppingListItem(@PathVariable Integer id, @ModelAttribute ShoppingItem completedItem) {
+
+        return "redirect:/mylists/" + id;
+    }
 }

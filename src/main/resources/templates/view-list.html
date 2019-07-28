@@ -67,7 +67,7 @@
       <p class="lead" th:text="${list.description}">List description</p>
     </div>
 
-      <form method="post" th:action="${#request.requestURI} + '/addItem'" th:object="${newListItem}">
+      <form method="post" th:action="@{../additem}" th:object="${newListItem}">
         <div class="form-row">
           <div class="col-sm-1 col-md-2 col-lg-3"></div>
 
@@ -94,16 +94,22 @@
       </form>
     <hr>
     <ul class="list-group">
-      <li class="list-group-item" th:each="item : ${list.items}">
-        <a th:href="${#request.requestURI} + '/'" class="btn btn-block" role="button">
-          <div class="row">
-            <div class="col-5">item name</div>
-            <div class="col-2">3</div>
-            <div class="col">
+      <li class="list-group-item" th:each="item : ${list.items}" th:if="${item.complete} == false">
+        <form th:action="@{../items/complete}" method="post">
 
+          <input type="hidden" th:value="${item.id}" th:field="${item.id}">
+          <input type="hidden" th:value="${item.name}" th:field="${item.name}">
+          <input type="hidden" th:value="${item.quantity}" th:field="${item.quantity}">
+
+          <div class="row align-items-center">
+            <div class=""></div>
+            <div class="col-6"><span class="h5">Item name</span></div>
+            <div class="col-4 pl-3"><span class="h5"><span class="h5">Qty. </span>2</span></div>
+            <div class="col-2">
+              <button class="btn btn-outline-success float-right" type="submit">Done</button>
             </div>
           </div>
-        </a>
+        </form>
       </li>
     </ul>
   </div>

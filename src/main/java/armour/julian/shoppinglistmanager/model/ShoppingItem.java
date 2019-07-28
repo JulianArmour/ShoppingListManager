@@ -20,6 +20,10 @@ public class ShoppingItem {
     @Column(name = "quantity")
     private Integer quantity;
 
+    /**
+     * Marks that a list item has been per-say "added to cart"
+     * or purchased.
+     */
     @Column(name = "complete")
     private Boolean complete;
 
@@ -29,5 +33,6 @@ public class ShoppingItem {
     public ShoppingItem(String name, Integer quantity) {
         this.name = name;
         this.quantity = quantity;
+        this.complete = false;
     }
 }
