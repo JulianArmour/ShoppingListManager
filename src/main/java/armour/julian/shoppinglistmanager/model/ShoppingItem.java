@@ -18,12 +18,12 @@ public class ShoppingItem {
     private String name;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     public ShoppingItem() {
     }
 
-    public ShoppingItem(String name, int quantity) {
+    public ShoppingItem(String name, Integer quantity) {
         this.name = name;
         this.quantity = quantity;
     }

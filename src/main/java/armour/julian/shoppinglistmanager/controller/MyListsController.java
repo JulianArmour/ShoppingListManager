@@ -1,18 +1,23 @@
 package armour.julian.shoppinglistmanager.controller;
 
+import armour.julian.shoppinglistmanager.model.ShoppingItem;
 import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
+import armour.julian.shoppinglistmanager.service.ShoppingListService;
 import armour.julian.shoppinglistmanager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/mylists")
 @RequiredArgsConstructor
 public class MyListsController {
     private final UserService userService;
+    private final ShoppingListService shoppingListService;
 
     @GetMapping("")
     public String listManager(Model model) {
@@ -32,9 +37,19 @@ public class MyListsController {
         return "redirect:/mylists";
     }
 
-    @GetMapping("/mylists/{id}")
+    @GetMapping("/{id}")
     public String viewList(@PathVariable("id") Long id, Model model) {
-        //TODO
-        return "list-view";
+        User currentlyLoggedInUser = userService.getLoggedInUser(true, false);
+        Optional<ShoppingList> shoppingListToView = shoppingListService.getShoppingListById(id);
+
+        if (shoppingListToView.isPresent()) {
+            model.addAttribute("user", currentlyLoggedInUser);
+            model.addAttribute("list", shoppingListToView.get());
+            model.addAttribute("newList", new ShoppingList());
+            model.addAttribute("newListItem", new ShoppingItem());
+            return "view-list";
+        }
+
+        return "redirect:/mylists";
     }
 }
