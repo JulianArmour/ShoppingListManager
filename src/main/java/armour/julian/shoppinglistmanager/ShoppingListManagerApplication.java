@@ -28,7 +28,8 @@ public class ShoppingListManagerApplication {
             val list = new ShoppingList();
             list.setName("Groceries");
             list.setDescription("This week's grocery list");
-            list.addItem(new ShoppingItem("Brocoli", 3));
+            list.addItem(new ShoppingItem("Broccoli", 3));
+            list.addItem(new ShoppingItem("Steak", 5));
 
             val list2 = new ShoppingList();
             list2.setName("Clothes");

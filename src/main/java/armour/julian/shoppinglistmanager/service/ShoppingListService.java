@@ -21,4 +21,10 @@ public interface ShoppingListService {
     List<ShoppingList> getShoppingListsByCreator(@NonNull User user);
 
     List<ShoppingList> getShoppingListsSharedWithUser(User user);
+
+    /**
+     * @param listId the id of the {@linkplain ShoppingList} containing the item.
+     * @param itemId the id of the {@linkplain armour.julian.shoppinglistmanager.model.ShoppingItem}.
+     */
+    void markItemAsComplete(Long listId, Long itemId);
 }

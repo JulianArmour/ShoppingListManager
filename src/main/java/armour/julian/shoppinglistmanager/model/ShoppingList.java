@@ -1,15 +1,10 @@
 package armour.julian.shoppinglistmanager.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "shopping_list")
@@ -54,5 +49,15 @@ public class ShoppingList {
 
     public void addPermittedEditor(User newPermittedEditor) {
         this.permittedEditors.add(newPermittedEditor);
+    }
+
+    public Optional<ShoppingItem> getItem(Long itemId) {
+        for (ShoppingItem shoppingItem:
+             getItems()) {
+            if (shoppingItem.getId().equals(itemId)) {
+                return Optional.of(shoppingItem);
+            }
+        }
+        return Optional.empty();
     }
 }
