@@ -103,7 +103,8 @@
             <span class="font-weight-bold">Qty. </span><span class="font-weight-bold" th:text="${item.quantity}">2</span>
           </div>
           <div class="col-3">
-            <form th:action="@{../items/{itemid}/done(itemid = ${item.id})}" method="post">
+            <form th:action="@{{currentUri}/items/{itemid}/mark-done(currentUri = ${#request.requestURI},itemid = ${item.id})}"
+                  method="post">
               <button class="btn btn-outline-success float-right" type="submit">Done</button>
             </form>
           </div>

@@ -68,7 +68,7 @@ public class MyListsController {
         return "redirect:/mylists";
     }
 
-    @PostMapping("/{listId}/items/{itemId}/complete")
+    @PostMapping("/{listId}/items/{itemId}/mark-done")
     public String completeShoppingListItem(@PathVariable Long listId, @PathVariable Long itemId) {
         shoppingListService.markItemAsComplete(listId, itemId);
         return "redirect:/mylists/" + listId;
