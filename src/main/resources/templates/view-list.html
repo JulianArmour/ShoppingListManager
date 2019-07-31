@@ -93,7 +93,7 @@
         </div>
       </form>
     <hr>
-    <h5 class="text-center pb-2">Items Remaining</h5>
+    <h5 class="text-center pb-2">Remaining Items</h5>
     <ul class="list-group">
       <li class="list-group-item" th:each="item : ${list.items}" th:if="${item.complete} == false">
         <div class="row align-items-center">
@@ -107,6 +107,17 @@
                   method="post">
               <button class="btn btn-outline-success float-right" type="submit">Done</button>
             </form>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <h5 class="text-center pb-2 mt-4 mb-3">Completed Items</h5>
+    <ul class="list-group">
+      <li class="list-group-item" th:each="item : ${list.items}" th:if="${item.complete}">
+        <div class="row align-items-center">
+          <div class="col-10"><span class="font-weight-bold" th:text="${item.name}">Item name</span></div>
+          <div class="col-2">
+            <span class="font-weight-bold">Qty. </span><span class="font-weight-bold" th:text="${item.quantity}">2</span>
           </div>
         </div>
       </li>
