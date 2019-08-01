@@ -42,6 +42,11 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
+    public void deleteShoppingListById(Long listId) {
+        shoppingListRepo.deleteById(listId);
+    }
+
+    @Override
     public List<ShoppingList> getShoppingListsByCreator(@NonNull User user) {
         return shoppingListRepo.findShoppingListsByListCreator(user);
     }

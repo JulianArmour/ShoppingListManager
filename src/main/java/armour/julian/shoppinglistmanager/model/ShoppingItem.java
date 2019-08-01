@@ -35,4 +35,8 @@ public class ShoppingItem {
         this.quantity = quantity;
         this.complete = false;
     }
+
+    public Boolean isCompleted() {
+        return getComplete();
+    }
 }

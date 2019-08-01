@@ -93,7 +93,22 @@
         </div>
       </form>
     <hr>
-    <h5 class="text-center pb-2">Remaining Items</h5>
+    <div class="row align-items-center" th:if="${list.items.size() == list.numberOfCompletedItems()}">
+      <div class="col-lg-12">
+        <h2 class="text-center text-success">
+          All done!
+        </h2>
+      </div>
+      <div class="col-lg-4 mt-4 mb-5 text-center">
+        <form th:action="@{{currentUri}/delete(currentUri = ${#request.requestURI})}" method="post">
+          <button class="btn btn-warning">Delete List?</button>
+        </form>
+      </div>
+    </div>
+
+    <h5 class="text-center pb-2" th:if="${list.numberOfIncompleteItems() > 0}">
+      Remaining Items
+    </h5>
     <ul class="list-group">
       <li class="list-group-item" th:each="item : ${list.items}" th:if="${item.complete} == false">
         <div class="row align-items-center">
@@ -111,7 +126,9 @@
         </div>
       </li>
     </ul>
-    <h5 class="text-center pb-2 mt-4 mb-3">Completed Items</h5>
+    <h5 class="text-center pb-2 mt-4 mb-3" th:if="${list.numberOfCompletedItems() > 0}">
+      Completed Items
+    </h5>
     <ul class="list-group">
       <li class="list-group-item" th:each="item : ${list.items}" th:if="${item.complete}">
         <div class="row align-items-center">

@@ -73,4 +73,10 @@ public class MyListsController {
         shoppingListService.markItemAsComplete(listId, itemId);
         return "redirect:/mylists/" + listId;
     }
+
+    @PostMapping("/{listId}/delete")
+    public String deleteShoppingList(@PathVariable Long listId) {
+        shoppingListService.deleteShoppingListById(listId);
+        return "redirect:/mylists";
+    }
 }

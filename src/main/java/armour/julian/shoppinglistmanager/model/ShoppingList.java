@@ -60,4 +60,18 @@ public class ShoppingList {
         }
         return Optional.empty();
     }
+
+    public Integer numberOfCompletedItems() {
+        int numberOfCompletedItems = 0;
+        for (ShoppingItem item : getItems()) {
+            if (item.isCompleted()) {
+                numberOfCompletedItems++;
+            }
+        }
+        return numberOfCompletedItems;
+    }
+
+    public Integer numberOfIncompleteItems() {
+        return getItems().size() - numberOfCompletedItems();
+    }
 }

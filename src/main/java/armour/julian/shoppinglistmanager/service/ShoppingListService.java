@@ -27,4 +27,6 @@ public interface ShoppingListService {
      * @param itemId the id of the {@linkplain armour.julian.shoppinglistmanager.model.ShoppingItem}.
      */
     void markItemAsComplete(Long listId, Long itemId);
+
+    void deleteShoppingListById(Long listId);
 }
