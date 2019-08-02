@@ -34,7 +34,10 @@ public class ShoppingList {
     @Getter @Setter
     private User listCreator;
 
-    @ManyToMany(mappedBy = "listsSharedWithThisUser")
+    @ManyToMany
+    @JoinTable(name = "user_shopping_list",
+            joinColumns = @JoinColumn(name = "shopping_list_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @Getter @Setter
     private Set<User> permittedEditors;
 

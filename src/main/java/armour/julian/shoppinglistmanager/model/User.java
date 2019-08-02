@@ -40,10 +40,7 @@ public class User {
      * The lists created by other users which this user has access to edit.
      */
     @ToString.Exclude
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "user_shopping_list",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "shopping_list_id"))
+    @ManyToMany(mappedBy = "permittedEditors", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @Getter @Setter
     private Set<ShoppingList> listsSharedWithThisUser;
 

@@ -1,5 +1,6 @@
 package armour.julian.shoppinglistmanager.service;
 
+import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import armour.julian.shoppinglistmanager.security.UserPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +19,11 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final ShoppingListService shoppingListService;
+
+    @Override
+    public List<User> findPermittedListEditors(ShoppingList shoppingList) {
+        return userRepository.findAllByListsSharedWithThisUser(shoppingList);
+    }
 
     public User registerNewUser(String username, String password) {
         val user = new User();
