@@ -55,8 +55,10 @@ public class MyListsController {
     @GetMapping("/{id}")
     public String viewList(@PathVariable("id") Long id, Model model) {
         Optional<ShoppingList> shoppingListToView = shoppingListService.getShoppingListById(id);
+        shoppingListToView.ifPresent(shoppingListService::loadPermittedEditors);
 
         if (shoppingListToView.isPresent()) {
+            model.addAttribute("permittedEditors", shoppingListToView.get().getPermittedEditors());
             model.addAttribute("list", shoppingListToView.get());
             // form model attribute for adding a new ShoppingItem
             model.addAttribute("newListItem", new ShoppingItem());
@@ -78,5 +80,11 @@ public class MyListsController {
     public String deleteShoppingList(@PathVariable Long listId) {
         shoppingListService.deleteShoppingListById(listId);
         return "redirect:/mylists";
+    }
+
+    @PostMapping("/{listId}/add-permitted-editor")
+    public String addPermittedEditor(@PathVariable Long listId, @RequestParam("username") String username) {
+        shoppingListService.addPermittedEditorToList(username, listId);
+        return "redirect:/mylists/" + listId;
     }
 }

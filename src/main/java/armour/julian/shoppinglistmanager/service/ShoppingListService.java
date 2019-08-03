@@ -29,4 +29,11 @@ public interface ShoppingListService {
     void markItemAsComplete(Long listId, Long itemId);
 
     void deleteShoppingListById(Long listId);
+
+    void addPermittedEditorToList(String username, Long listId);
+
+    /**
+     * @param shoppingList the list for which to add the permitted editors from the database.
+     */
+    void loadPermittedEditors(ShoppingList shoppingList);
 }

@@ -1,12 +1,14 @@
 package armour.julian.shoppinglistmanager.security;
 
+import armour.julian.shoppinglistmanager.model.User;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,10 +17,12 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        val user = userRepo.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
+        Optional<User> userToLoad = userRepo.findByUsername(username);
+
+        if (userToLoad.isPresent()) {
+            return new UserPrincipal(userToLoad.get());
         }
-        return new UserPrincipal(user);
+
+        throw new UsernameNotFoundException(username);
     }
 }

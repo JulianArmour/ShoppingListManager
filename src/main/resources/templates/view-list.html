@@ -65,15 +65,17 @@
     <div class="jumbotron">
       <h1 class="display-4" th:text="${list.name}">List name</h1>
       <p class="lead" th:text="${list.description}">List description</p>
+      <small>Shared with </small>
+      <small th:each="permittedEditor : ${permittedEditors}" th:text="${permittedEditor.username}"></small>
     </div>
 
       <form method="post" th:action="@{../additem}" th:object="${newListItem}">
-        <div class="form-row">
+        <div class="form-row mb-4">
           <div class="col-sm-1 col-md-2 col-lg-3"></div>
 
           <div class="col-6 col-sm-4 col-md-3 col-lg-3">
             <label for="itemName" class="sr-only">Item name</label>
-            <input type="text" class="form-control" id="itemName" placeholder="name" th:field="*{name}">
+            <input type="text" class="form-control" id="itemName" placeholder="Item name" th:field="*{name}">
           </div>
 
           <div class="col-6 col-sm-4 col-md-3 col-lg-2">
@@ -99,7 +101,7 @@
           All done!
         </h2>
       </div>
-      <div class="col-lg-4 mt-4 mb-5 text-center">
+      <div class="col-lg-12 mt-4 mb-5 text-center">
         <form th:action="@{{currentUri}/delete(currentUri = ${#request.requestURI})}" method="post">
           <button class="btn btn-warning">Delete List?</button>
         </form>
