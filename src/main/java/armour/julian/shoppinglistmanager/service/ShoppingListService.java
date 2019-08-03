@@ -1,5 +1,6 @@
 package armour.julian.shoppinglistmanager.service;
 
+import armour.julian.shoppinglistmanager.model.ShoppingItem;
 import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
 import lombok.NonNull;
@@ -36,4 +37,6 @@ public interface ShoppingListService {
      * @param shoppingList the list for which to add the permitted editors from the database.
      */
     void loadPermittedEditors(ShoppingList shoppingList);
+
+    void addItemToList(ShoppingItem newItem, Long listId);
 }

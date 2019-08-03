@@ -70,6 +70,14 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
+    public void addItemToList(ShoppingItem newItem, Long listId) {
+        shoppingListRepository.findById(listId).ifPresent(shoppingList -> {
+            shoppingList.addItem(newItem);
+            shoppingListRepository.save(shoppingList);
+        });
+    }
+
+    @Override
     public List<ShoppingList> getShoppingListsByCreator(@NonNull User user) {
         return shoppingListRepository.findShoppingListsByListCreator(user);
     }

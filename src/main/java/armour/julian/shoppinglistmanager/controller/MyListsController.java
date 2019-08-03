@@ -70,6 +70,12 @@ public class MyListsController {
         return "redirect:/mylists";
     }
 
+    @PostMapping("/{listId}/add-item")
+    public String addListItem(@PathVariable Long listId, @ModelAttribute ShoppingItem newItem) {
+        shoppingListService.addItemToList(newItem, listId);
+        return "redirect:/mylists/" + listId;
+    }
+
     @PostMapping("/{listId}/items/{itemId}/mark-done")
     public String completeShoppingListItem(@PathVariable Long listId, @PathVariable Long itemId) {
         shoppingListService.markItemAsComplete(listId, itemId);

@@ -28,6 +28,7 @@ public class ShoppingItem {
     private Boolean complete;
 
     public ShoppingItem() {
+        this.complete = false;
     }
 
     public ShoppingItem(String name, Integer quantity) {

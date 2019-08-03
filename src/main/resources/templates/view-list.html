@@ -65,13 +65,13 @@
     <div class="jumbotron">
       <h1 class="display-4" th:text="${list.name}">List name</h1>
       <p class="lead" th:text="${list.description}">List description</p>
-      <small>Shared with </small>
-      <small th:each="permittedEditor : ${permittedEditors}" th:text="${permittedEditor.username}"></small>
+      <small th:if="${permittedEditors.size() > 0}">Shared with:</small>
+      <small th:each="permittedEditor : ${permittedEditors}" th:text="' ' + ${permittedEditor.username}"></small>
     </div>
 
-      <form method="post" th:action="@{../additem}" th:object="${newListItem}">
+      <form method="post" th:action="@{{currentUri}/add-item(currentUri=${#request.requestURI})}" th:object="${newListItem}">
         <div class="form-row mb-4">
-          <div class="col-sm-1 col-md-2 col-lg-3"></div>
+          <div class="col-sm-1 col-md-2 col-lg-2 mr-lg-5"></div>
 
           <div class="col-6 col-sm-4 col-md-3 col-lg-3">
             <label for="itemName" class="sr-only">Item name</label>
@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-sm-2">
+          <div class="col-12 col-sm-2 col-lg-1">
             <button class="btn btn-primary btn-block mt-2 mt-sm-0" type="submit">Add</button>
           </div>
 
