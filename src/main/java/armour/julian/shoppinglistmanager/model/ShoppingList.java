@@ -55,26 +55,14 @@ public class ShoppingList {
     }
 
     public Optional<ShoppingItem> getItem(Long itemId) {
-        for (ShoppingItem shoppingItem:
-             getItems()) {
-            if (shoppingItem.getId().equals(itemId)) {
-                return Optional.of(shoppingItem);
-            }
-        }
-        return Optional.empty();
+        return getItems().stream().filter(shoppingItem -> itemId.equals(shoppingItem.getId())).findAny();
     }
 
-    public Integer numberOfCompletedItems() {
-        int numberOfCompletedItems = 0;
-        for (ShoppingItem item : getItems()) {
-            if (item.isCompleted()) {
-                numberOfCompletedItems++;
-            }
-        }
-        return numberOfCompletedItems;
+    public Long numberOfCompletedItems() {
+        return getItems().stream().filter(ShoppingItem::isCompleted).count();
     }
 
-    public Integer numberOfIncompleteItems() {
+    public Long numberOfIncompleteItems() {
         return getItems().size() - numberOfCompletedItems();
     }
 }

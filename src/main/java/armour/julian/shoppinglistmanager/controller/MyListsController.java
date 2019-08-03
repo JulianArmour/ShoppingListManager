@@ -64,6 +64,8 @@ public class MyListsController {
             model.addAttribute("newListItem", new ShoppingItem());
             // form model attribute for completing (checking-off) a ShoppingItem
             model.addAttribute("completedItem", new ShoppingItem());
+            // 'Share' button user model
+            model.addAttribute("sharedUser", new User());
             return "view-list";
         }
 
@@ -88,9 +90,9 @@ public class MyListsController {
         return "redirect:/mylists";
     }
 
-    @PostMapping("/{listId}/add-permitted-editor")
-    public String addPermittedEditor(@PathVariable Long listId, @RequestParam("username") String username) {
-        shoppingListService.addPermittedEditorToList(username, listId);
+    @PostMapping(value = "/{listId}/add-permitted-editor")
+    public String addPermittedEditor(@PathVariable Long listId, @ModelAttribute User user) {
+        shoppingListService.addPermittedEditorToList(user.getUsername(), listId);
         return "redirect:/mylists/" + listId;
     }
 }

@@ -32,32 +32,57 @@
   </nav>
 
 <!--New list modal-->
-<div class="modal fade" id="newListForm" tabindex="-1" role="dialog" aria-labelledby="newListTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="form">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newListTitle">Create a new list</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="#" th:action="@{/mylists/create}" th:object="${newList}" method="post">
-          <div class="form-group">
-            <label for="newListName">List name</label>
-            <input class="form-control" id="newListName" placeholder="E.g Groceries" th:field="*{name}" type="text">
-          </div>
-          <div class="form-group">
-            <label for="listDescription">Description</label>
-            <input class="form-control" id="listDescription" placeholder="E.g The grocery list for this week"
-                   th:field="*{description}" type="text">
-          </div>
-          <button type="submit" class="btn btn-success">Create</button>
-        </form>
+  <div class="modal fade" id="newListForm" tabindex="-1" role="dialog" aria-labelledby="newListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="form">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newListTitle">Create a new list</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#" th:action="@{/mylists/create}" th:object="${newList}" method="post">
+            <div class="form-group">
+              <label for="newListName">List name</label>
+              <input class="form-control" id="newListName" placeholder="E.g Groceries" th:field="*{name}" type="text">
+            </div>
+            <div class="form-group">
+              <label for="listDescription">Description</label>
+              <input class="form-control" id="listDescription" placeholder="E.g The grocery list for this week"
+                     th:field="*{description}" type="text">
+            </div>
+            <button type="submit" class="btn btn-success">Create</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+<!--Share List Modal-->
+  <div class="modal fade" id="addPermittedEditor" tabindex="-2"
+       role="dialog" aria-labelledby="addPermittedEditor" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-top" role="form">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="shareListTitle">Share List</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{{currentUri}/add-permitted-editor(currentUri=${#request.requestURI})}"
+                  th:object="${sharedUser}" method="post">
+              <div class="form-group">
+                <label for="usernameToShareWith">username</label>
+                <input class="form-control" id="usernameToShareWith" type="text" th:field="*{username}">
+              </div>
+              <button type="submit" class="btn btn-secondary">Share</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
 
 <!--Main content-->
 
@@ -65,8 +90,10 @@
     <div class="jumbotron">
       <h1 class="display-4" th:text="${list.name}">List name</h1>
       <p class="lead" th:text="${list.description}">List description</p>
-      <small th:if="${permittedEditors.size() > 0}">Shared with:</small>
-      <small th:each="permittedEditor : ${permittedEditors}" th:text="' ' + ${permittedEditor.username}"></small>
+      <button type="button" class="btn btn-outline-secondary mb-3" data-toggle="modal" data-target="#addPermittedEditor">Share</button>
+      <br>
+      <span class="lead" th:if="${permittedEditors.size() > 0}">Shared with:</span>
+      <span class="lead" th:each="permittedEditor : ${permittedEditors}" th:text="' ' + ${permittedEditor.username}">a b c</span>
     </div>
 
       <form method="post" th:action="@{{currentUri}/add-item(currentUri=${#request.requestURI})}" th:object="${newListItem}">
