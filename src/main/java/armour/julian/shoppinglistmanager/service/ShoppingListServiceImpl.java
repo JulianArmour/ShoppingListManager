@@ -7,6 +7,7 @@ import armour.julian.shoppinglistmanager.repository.ShoppingListRepository;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,10 +21,19 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     private final ShoppingListRepository shoppingListRepository;
     private final UserRepository userRepository;
     private final ShoppingItemService shoppingItemService;
+    private final UserService userService;
 
     @Override
     public Optional<ShoppingList> getShoppingListById(@NonNull Long id) {
-        return shoppingListRepository.findById(id);
+        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
+        shoppingList.ifPresent(list -> {
+            boolean userHasAccessToList = userService.getLoggedInUser(false, false).getUsername()
+                                            .equals(list.getListCreator().getUsername());
+            if (!userHasAccessToList) {
+                throw new AccessDeniedException("You do not have access to this list");
+            }
+        });
+        return shoppingList;
     }
 
     @Override

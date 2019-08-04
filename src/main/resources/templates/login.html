@@ -18,6 +18,9 @@
         <div th:if="${param.error != null}" class="alert alert-danger mb-5">
           Invalid username or password
         </div>
+        <div th:if="${param.logout != null}" class="alert alert-success mb-5">
+          Successfully logged out
+        </div>
         <h1 class="h3 mb-4">Please log in</h1>
         <form th:action="@{/login}" method="post">
           <label class="sr-only" for="username">Username</label>

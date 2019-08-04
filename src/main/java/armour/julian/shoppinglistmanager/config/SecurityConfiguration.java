@@ -32,13 +32,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/mylists")
             .and().logout()
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
-        http
-            .csrf().disable();
-        http
-            .headers().frameOptions().disable();
-
+                .permitAll()
+            .and().exceptionHandling()
+                .accessDeniedPage("/mylists");
     }
 
     @Bean

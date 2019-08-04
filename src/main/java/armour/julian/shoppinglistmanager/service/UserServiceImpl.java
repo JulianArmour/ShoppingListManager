@@ -3,6 +3,7 @@ package armour.julian.shoppinglistmanager.service;
 import armour.julian.shoppinglistmanager.controller.Exceptions.UserAlreadyExistsException;
 import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
+import armour.julian.shoppinglistmanager.repository.ShoppingListRepository;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import armour.julian.shoppinglistmanager.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final ShoppingListService shoppingListService;
+    private final ShoppingListRepository shoppingListRepository;
 
     @Override
     public List<User> findPermittedListEditors(ShoppingList shoppingList) {
@@ -45,11 +46,11 @@ public class UserServiceImpl implements UserService {
         val user = userPrincipal.getUser();
 
         if (loadCreatedLists) {
-            user.setCreatedShoppingLists(shoppingListService.getShoppingListsByCreator(user));
+            user.setCreatedShoppingLists(shoppingListRepository.findShoppingListsByListCreator(user));
         }
 
         if (loadSharedLists) {
-            user.setListsSharedWithThisUser(new HashSet<>(shoppingListService.getShoppingListsSharedWithUser(user)));
+            user.setListsSharedWithThisUser(new HashSet<>(shoppingListRepository.findShoppingListsByPermittedEditors(user)));
         }
         return user;
     }

@@ -25,7 +25,11 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item"><span class="navbar-text mr-sm-4" th:text="${user.username}">Username</span></li>
-        <li class="nav-item"><a th:href="@{/logout}" class="btn btn-outline-danger col-sm">Log Out</a></li>
+        <li class="nav-item">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" th:href="@{/logout}" class="btn btn-outline-danger col-sm">Log Out</button>
+          </form>
+        </li>
       </ul>
     </div>
   </nav>
