@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     List<User> findPermittedListEditors(ShoppingList shoppingList);
 
-    User registerNewUser(String username, String password);
+    void registerNewUser(String username, String password);
 
     User getLoggedInUser(boolean loadCreatedLists, boolean loadSharedLists);
 

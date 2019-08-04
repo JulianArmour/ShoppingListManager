@@ -73,7 +73,7 @@ public class MyListsController {
     }
 
     @PostMapping("/{listId}/add-item")
-    public String addListItem(@PathVariable Long listId, @ModelAttribute ShoppingItem newItem) {
+    public String addListItem(@PathVariable Long listId, @ModelAttribute("newListItem") ShoppingItem newItem) {
         shoppingListService.addItemToList(newItem, listId);
         return "redirect:/mylists/" + listId;
     }
@@ -91,7 +91,7 @@ public class MyListsController {
     }
 
     @PostMapping(value = "/{listId}/add-permitted-editor")
-    public String addPermittedEditor(@PathVariable Long listId, @ModelAttribute User user) {
+    public String addPermittedEditor(@PathVariable Long listId, @ModelAttribute("sharedUser") User user) {
         shoppingListService.addPermittedEditorToList(user.getUsername(), listId);
         return "redirect:/mylists/" + listId;
     }

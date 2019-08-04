@@ -1,6 +1,5 @@
 package armour.julian.shoppinglistmanager.config;
 
-import armour.julian.shoppinglistmanager.security.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,9 +25,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/**").authenticated()
-                .and()
-            .formLogin();
+            .and().formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/mylists")
+            .and().logout()
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
         http
             .csrf().disable();
         http

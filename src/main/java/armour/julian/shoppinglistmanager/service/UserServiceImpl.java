@@ -1,5 +1,6 @@
 package armour.julian.shoppinglistmanager.service;
 
+import armour.julian.shoppinglistmanager.controller.Exceptions.UserAlreadyExistsException;
 import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
@@ -25,20 +26,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllByListsSharedWithThisUser(shoppingList);
     }
 
-    public User registerNewUser(String username, String password) {
-        val user = new User();
+    public void registerNewUser(String username, String password) {
+        User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-        return userRepository.save(user);
+
+        // check if the username is already taken
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new UserAlreadyExistsException(username);
+        }
+
+        userRepository.save(user);
     }
 
     @Override
     public User getLoggedInUser(boolean loadCreatedLists, boolean loadSharedLists) {
         val userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         val user = userPrincipal.getUser();
+
         if (loadCreatedLists) {
             user.setCreatedShoppingLists(shoppingListService.getShoppingListsByCreator(user));
         }
+
         if (loadSharedLists) {
             user.setListsSharedWithThisUser(new HashSet<>(shoppingListService.getShoppingListsSharedWithUser(user)));
         }
