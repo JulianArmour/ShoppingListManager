@@ -37,6 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and().exceptionHandling()
                 .accessDeniedPage("/mylists");
+
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
     }
 
     @Bean

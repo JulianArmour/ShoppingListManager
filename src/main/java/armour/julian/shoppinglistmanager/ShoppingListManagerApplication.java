@@ -3,6 +3,7 @@ package armour.julian.shoppinglistmanager;
 import armour.julian.shoppinglistmanager.model.ShoppingItem;
 import armour.julian.shoppinglistmanager.model.ShoppingList;
 import armour.julian.shoppinglistmanager.model.User;
+import armour.julian.shoppinglistmanager.repository.ShoppingListRepository;
 import armour.julian.shoppinglistmanager.repository.UserRepository;
 import lombok.val;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +20,9 @@ public class ShoppingListManagerApplication {
     }
 
     @Bean
-    public CommandLineRunner initUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner initUser(ShoppingListRepository listRepository,
+                                      UserRepository userRepository,
+                                      PasswordEncoder passwordEncoder) {
         return (args) -> {
             val user = new User();
             user.setUsername("test");
@@ -51,14 +54,15 @@ public class ShoppingListManagerApplication {
             userRepository.save(user2);
 
             val list3 = new ShoppingList();
-            list3.setName("Shared list");
-            list3.setDescription("testing shared lists");
-            list3.addItem(new ShoppingItem("good stuff", 4));
+            list3.setName("Pharmacy");
+            list3.setDescription("pharmacy list");
+            list3.addItem(new ShoppingItem("Toothpaste", 2));
 
             user2.addCreatedList(list3);
             list3.setListCreator(user2);
             // share the list
             list3.addPermittedEditor(user);
+            listRepository.save(list3);
             user.addListSharedWithThisUser(list3);
             userRepository.save(user);
             userRepository.save(user2);

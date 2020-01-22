@@ -27,9 +27,14 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     public Optional<ShoppingList> getShoppingListById(@NonNull Long id) {
         Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
         shoppingList.ifPresent(list -> {
-            boolean userHasAccessToList = userService.getLoggedInUser(false, false).getUsername()
-                                            .equals(list.getListCreator().getUsername());
-            if (!userHasAccessToList) {
+            final User loggedInUser = userService.getLoggedInUser(false, false);
+            final String loggedInUserName = loggedInUser.getUsername();
+            boolean userIsListCreator = loggedInUserName.equals(list.getListCreator().getUsername());
+            boolean userIsShared =
+                list.getPermittedEditors().stream()
+                    .map(User::getUsername)
+                    .anyMatch(loggedInUserName::equals);
+            if (!userIsListCreator && !userIsShared) {
                 throw new AccessDeniedException("You do not have access to this list");
             }
         });
