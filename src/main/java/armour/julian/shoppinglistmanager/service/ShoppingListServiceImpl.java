@@ -25,20 +25,25 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
     @Override
     public Optional<ShoppingList> getShoppingListById(@NonNull Long id) {
-        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
-        shoppingList.ifPresent(list -> {
-            final User loggedInUser = userService.getLoggedInUser(false, false);
-            final String loggedInUserName = loggedInUser.getUsername();
-            boolean userIsListCreator = loggedInUserName.equals(list.getListCreator().getUsername());
-            boolean userIsShared =
-                list.getPermittedEditors().stream()
-                    .map(User::getUsername)
-                    .anyMatch(loggedInUserName::equals);
-            if (!userIsListCreator && !userIsShared) {
-                throw new AccessDeniedException("You do not have access to this list");
-            }
-        });
-        return shoppingList;
+        final User loggedInUser = userService.getLoggedInUser(false, false);
+        final String loggedInUserName = loggedInUser.getUsername();
+        return shoppingListRepository
+            .findById(id)
+            .filter(shopList -> userCanEdit(shopList, loggedInUserName));
+    }
+
+    private static boolean userCanEdit(ShoppingList list, String username) {
+        return userIsListCreator(list, username) || userIsSharedEditor(list, username);
+    }
+
+    private static boolean userIsSharedEditor(ShoppingList list, String username) {
+        return list.getPermittedEditors().stream()
+            .map(User::getUsername)
+            .anyMatch(username::equals);
+    }
+
+    private static boolean userIsListCreator(ShoppingList list, String username) {
+        return username.equals(list.getListCreator().getUsername());
     }
 
     @Override
