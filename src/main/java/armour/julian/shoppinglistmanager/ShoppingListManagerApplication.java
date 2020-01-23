@@ -36,7 +36,7 @@ public class ShoppingListManagerApplication {
 
             val list2 = new ShoppingList();
             list2.setName("Clothes");
-            list2.setDescription("Get dem shirts and stuff");
+            list2.setDescription("Buy shirts");
             list2.addItem(new ShoppingItem("Blue Polo", 1));
 
             user.addCreatedList(list);

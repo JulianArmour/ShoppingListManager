@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Controller
 @RequestMapping("/mylists")
@@ -55,20 +56,24 @@ public class MyListsController {
     @GetMapping("/{id}")
     public String viewList(@PathVariable("id") Long id, Model model) {
         Optional<ShoppingList> shoppingListToView = shoppingListService.getShoppingListById(id);
-        shoppingListToView.ifPresent(shoppingListService::loadPermittedEditors);
-
         if (!shoppingListToView.isPresent()) {
             return "redirect:/mylists";
         }
-        model.addAttribute("permittedEditors", shoppingListToView.get().getPermittedEditors());
-        model.addAttribute("list", shoppingListToView.get());
+        ShoppingList list = shoppingListToView.get();
+        shoppingListService.loadPermittedEditors(list);
+        fillViewListModel(model, list);
+        return "view-list";
+    }
+
+    public void fillViewListModel(Model model, ShoppingList shoppingListToView) {
+        model.addAttribute("permittedEditors", shoppingListToView.getPermittedEditors());
+        model.addAttribute("list", shoppingListToView);
         // form model attribute for adding a new ShoppingItem
         model.addAttribute("newListItem", new ShoppingItem());
         // form model attribute for completing (checking-off) a ShoppingItem
         model.addAttribute("completedItem", new ShoppingItem());
         // 'Share' button user model
         model.addAttribute("sharedUser", new User());
-        return "view-list";
     }
 
     @PostMapping("/{listId}/add-item")
